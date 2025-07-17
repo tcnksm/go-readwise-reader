@@ -50,14 +50,16 @@ jobs:
           # assignee_trigger: "claude-bot"
           
           # Optional: Allow Claude to run specific commands
-          allowed_tools: "Bash(go fmt ./...),Bash(go vet ./...),Bash(go test ./...),Bash(go test -race -cover ./...),Bash(staticcheck ./...)"
+          allowed_tools: "Bash(go fmt:*),Bash(go vet:*),Bash(go test:*),Bash(git status:*),Bash(git log:*),Bash(git show:*),Bash(git blame:*),Bash(git reflog:*),Bash(git ls-files:*),Bash(git branch:*),Bash(git tag:*),Bash(git diff:*),Bash(git rev-parse:*),Bash(git fetch:*),Bash(go mod:*),mcp__github__get_pull_request,mcp__github__get_pull_request_comments,mcp__github__create_pull_request,mcp__github__add_pull_request_review_comment"
           
           # Optional: Add custom instructions for Claude to customize its behavior for your project
           custom_instructions: |
-            Follow Go best practices and effective Go guidelines
-            Ensure all new code has tests with good coverage
+            Follow Go best practices and effective Go guidelines.
+            Ensure all new code has tests with good coverage.
             Always run go fmt, go vet, and go test before submitting changes
             Follow the project structure defined in CLAUDE.md
+            Create a new branch for each feature or bug fix.
+            Create a new PR for each feature or bug fix.
           
           # Optional: Custom environment variables for Claude
           # claude_env: |
