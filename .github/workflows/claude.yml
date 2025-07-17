@@ -58,7 +58,7 @@ jobs:
             Ensure all new code has tests with good coverage
             Always run go fmt, go vet, and go test before submitting changes
             Follow the project structure defined in CLAUDE.md
-            Sign commits with -S option when creating commits
+            If GPG keys are properly configured, sign commits with the -S option when creating commits
           
           # Optional: Custom environment variables for Claude
           # claude_env: |
