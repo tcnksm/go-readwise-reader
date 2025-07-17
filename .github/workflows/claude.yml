@@ -19,9 +19,9 @@ jobs:
       (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      pull-requests: read
-      issues: read
+      contents: write
+      pull-requests: write
+      issues: write
       id-token: write
       actions: read # Required for Claude to read CI results on PRs
     steps:
@@ -50,13 +50,15 @@ jobs:
           # assignee_trigger: "claude-bot"
           
           # Optional: Allow Claude to run specific commands
-          # allowed_tools: "Bash(npm install),Bash(npm run build),Bash(npm run test:*),Bash(npm run lint:*)"
+          allowed_tools: "Bash(go fmt ./...),Bash(go vet ./...),Bash(go test ./...),Bash(go test -race -cover ./...),Bash(staticcheck ./...)"
           
           # Optional: Add custom instructions for Claude to customize its behavior for your project
-          # custom_instructions: |
-          #   Follow our coding standards
-          #   Ensure all new code has tests
-          #   Use TypeScript for new files
+          custom_instructions: |
+            Follow Go best practices and effective Go guidelines
+            Ensure all new code has tests with good coverage
+            Always run go fmt, go vet, and go test before submitting changes
+            Follow the project structure defined in CLAUDE.md
+            Sign commits with -S option when creating commits
           
           # Optional: Custom environment variables for Claude
           # claude_env: |
