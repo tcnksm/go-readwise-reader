@@ -25,5 +25,4 @@
 // Set your token as an environment variable:
 //
 //	export READWISE_ACCESS_TOKEN="your-token-here"
-//
 package reader

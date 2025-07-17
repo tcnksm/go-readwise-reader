@@ -30,62 +30,73 @@ This document outlines the step-by-step implementation plan for the go-readwise-
 - [x] Create CLAUDE.md with development guidelines
 - [x] Create doc/TODO.md (this file)
 
-## Phase 1: Basic Client Setup
+## Phase 1: Basic Client Setup ✓
 
 **Branch**: `feature/client-setup`
 **Goal**: Establish the foundation for the API client
+**Status**: Complete
 
 ### Steps:
 
 1. **Design Interface** (README.md update)
-   - [ ] Basic client interface design
-   - [ ] Show minimal example usage
-   - [ ] Get approval before implementation
+   - [x] Basic client interface design
+   - [x] Show minimal example usage
+   - [x] Get approval before implementation
 
 2. **Implementation**
-   - [ ] Create `client.go` with Client interface
-   - [ ] Create `client_impl.go` with basic implementation
-   - [ ] Create `errors.go` for common error types
-   - [ ] Create `doc.go` for package documentation
+   - [x] Create `client.go` with Client interface
+   - [x] Create `client_impl.go` with basic implementation
+   - [x] Create `errors.go` for common error types
+   - [x] Create `doc.go` for package documentation
 
 3. **Testing**
-   - [ ] Unit tests for client creation
-   - [ ] Example test for documentation
+   - [x] Unit tests for client creation
+   - [x] Example test for documentation
 
 4. **Documentation**
-   - [ ] Update README.md with actual interface
-   - [ ] Ensure godoc is clean
+   - [x] Update README.md with actual interface
+   - [x] Ensure godoc is clean
 
-## Phase 2: List Documents API
+## Phase 2: List Documents API ✓
 
 **Branch**: `feature/list-documents`
 **Goal**: Implement the first API endpoint
+**Status**: Complete
 
 ### Steps:
 
 1. **Research & Design**
-   - [ ] Study https://readwise.io/reader_api for list endpoint
-   - [ ] Design interface in README.md
-   - [ ] Define minimal ListDocumentsOptions (start with 2-3 fields)
-   - [ ] Get approval
+   - [x] Study https://readwise.io/reader_api for list endpoint
+   - [x] Design interface in README.md
+   - [x] Define ListDocumentsOptions with comprehensive fields
+   - [x] Create typed constants for Location and Category
 
 2. **Implementation**
-   - [ ] Create `list.go` with types and implementation
-   - [ ] Start with basic parameters only:
-     - `Limit` (pagination)
-     - `Category` (filter)
-     - `UpdatedAfter` (filter)
-   - [ ] Handle pagination with Next/Previous
+   - [x] Create `list.go` with types and implementation
+   - [x] Implement comprehensive parameters:
+     - `ID` (specific document lookup)
+     - `UpdatedAfter` (time-based filter)
+     - `Location` (typed enum: new, later, archive, feed)
+     - `Category` (typed enum: article, email, rss, pdf, epub, tweet, video, highlight)
+     - `Tag` (tag-based filter)
+     - `PageCursor` (pagination)
+     - `WithHTMLContent` (content inclusion)
+   - [x] Handle pagination with NextPageCursor
+   - [x] Proper HTTP client implementation with context support
+   - [x] Error handling for API responses
 
 3. **Testing**
-   - [ ] Create `list_test.go` with comprehensive tests
-   - [ ] Mock HTTP responses
-   - [ ] Test error cases
-   - [ ] Create `list_example_test.go` for godoc
+   - [x] Create `list_test.go` with comprehensive table-driven tests
+   - [x] Mock HTTP responses for various scenarios
+   - [x] Test error cases and edge conditions
+   - [x] Test context cancellation
+   - [x] Create `list_example_test.go` for godoc examples
 
 4. **Integration**
-   - [ ] Update example in `_example/main.go`
-   - [ ] Manual testing with real API
+   - [x] Update example in `_example/main.go`
+   - [x] Update README.md with proper constant usage
+   - [x] All tests passing
+   - [x] Code formatted and linted
 
 ## Phase 3: Create Document API
 
