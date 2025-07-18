@@ -98,54 +98,56 @@ This document outlines the step-by-step implementation plan for the go-readwise-
    - [x] All tests passing
    - [x] Code formatted and linted
 
-## Phase 3: Create Document API
+## Phase 3: Create Document API ✓
 
 **Branch**: `feature/create-document`
-**Goal**: Add ability to create documents
+**Goal**: Add ability to create documents  
+**Status**: Complete
 
 ### Steps:
 
 1. **Research & Design**
-   - [ ] Study create endpoint in API docs
-   - [ ] Design interface in README.md
-   - [ ] Define minimal CreateDocumentRequest
-   - [ ] Get approval
+   - [x] Study create endpoint in API docs
+   - [x] Design interface in README.md
+   - [x] Define minimal CreateDocumentRequest
+   - [x] Get approval
 
 2. **Implementation**
-   - [ ] Create `create.go` with types and implementation
-   - [ ] Start with required fields only:
+   - [x] Create `create.go` with types and implementation
+   - [x] Start with required fields only:
      - `URL` (required)
      - `Title` (optional)
      - `Category` (optional)
 
 3. **Testing**
-   - [ ] Create `create_test.go`
-   - [ ] Create `create_example_test.go`
+   - [x] Create `create_test.go`
+   - [x] Create `create_example_test.go`
 
-## Phase 4: Update Document API
+## Phase 4: Update Document API ✓
 
 **Branch**: `feature/update-document`
 **Goal**: Add ability to update existing documents
+**Status**: Complete
 
 ### Steps:
 
 1. **Research & Design**
-   - [ ] Study update endpoint
-   - [ ] Design interface in README.md
-   - [ ] Define UpdateDocumentRequest
-   - [ ] Get approval
+   - [x] Study update endpoint
+   - [x] Design interface in README.md
+   - [x] Define UpdateDocumentRequest
+   - [x] Get approval
 
 2. **Implementation**
-   - [ ] Create `update.go`
-   - [ ] Handle partial updates
-   - [ ] Support common fields:
+   - [x] Create `update.go`
+   - [x] Handle partial updates
+   - [x] Support common fields:
      - `Title`
      - `Location` (archive, later, etc.)
      - `Tags`
 
 3. **Testing**
-   - [ ] Create `update_test.go`
-   - [ ] Create `update_example_test.go`
+   - [x] Create `update_test.go`
+   - [x] Create `update_example_test.go`
 
 ## Phase 5: Delete Document API
 
