@@ -10,6 +10,8 @@ import (
 )
 
 func TestUpdateDocument(t *testing.T) {
+	publishedDate := time.Date(2024, 1, 15, 0, 0, 0, 0, time.UTC)
+
 	tests := []struct {
 		name           string
 		documentID     string
@@ -59,7 +61,7 @@ func TestUpdateDocument(t *testing.T) {
 			documentID: "doc789",
 			req: &UpdateDocumentRequest{
 				Title:         "Article with Date",
-				PublishedDate: time.Date(2024, 1, 15, 0, 0, 0, 0, time.UTC),
+				PublishedDate: &publishedDate,
 			},
 			responseStatus: http.StatusOK,
 			responseBody: UpdateDocumentResponse{
