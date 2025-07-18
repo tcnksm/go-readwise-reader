@@ -36,10 +36,10 @@ jobs:
 
     - name: Check formatting
       run: |
-        gofmt_output=$(gofmt -l .)
-        if [ -n "$gofmt_output" ]; then
+        fmt_output=$(go fmt -l ./...)
+        if [ -n "$fmt_output" ]; then
           echo "The following files are not properly formatted:"
-          echo "$gofmt_output"
+          echo "$fmt_output"
           echo "Please run 'go fmt ./...' to fix formatting issues."
           exit 1
         fi
