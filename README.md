@@ -1,4 +1,6 @@
-# go-readwise-reader [![GoDoc](https://pkg.go.dev/badge/github.com/tcnksm/go-readwise-reader.svg)](https://pkg.go.dev/github.com/tcnksm/go-readwise-reader)
+# go-readwise-reader
+
+[![GoDoc](https://pkg.go.dev/badge/github.com/tcnksm/go-readwise-reader.svg)](https://pkg.go.dev/github.com/tcnksm/go-readwise-reader)
 
 `go-readwise-reader` is a Go package to interact with [Readwise Reader API](https://readwise.io/reader_api).
 
