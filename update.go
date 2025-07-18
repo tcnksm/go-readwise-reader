@@ -21,7 +21,7 @@ type UpdateDocumentRequest struct {
 	Summary string `json:"summary,omitempty"`
 
 	// PublishedDate is the document published date
-	PublishedDate time.Time `json:"published_date,omitempty"`
+	PublishedDate *time.Time `json:"published_date,omitempty"`
 
 	// ImageURL is the document image URL
 	ImageURL string `json:"image_url,omitempty"`
