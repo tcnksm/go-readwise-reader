@@ -36,7 +36,7 @@ jobs:
 
     - name: Check formatting
       run: |
-        fmt_output=$(go fmt -l ./...)
+        fmt_output=$(go fmt ./...)
         if [ -n "$fmt_output" ]; then
           echo "The following files are not properly formatted:"
           echo "$fmt_output"
