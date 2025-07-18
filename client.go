@@ -15,6 +15,7 @@ const (
 // Client interface for interacting with Readwise Reader API
 type Client interface {
 	ListDocuments(ctx context.Context, opts *ListDocumentsOptions) (*ListDocumentsResponse, error)
+	UpdateDocument(ctx context.Context, documentID string, req *UpdateDocumentRequest) (*UpdateDocumentResponse, error)
 }
 
 // client is the implementation of the Client interface
