@@ -42,7 +42,7 @@ func ExampleClient_ListDocuments_withFilters() {
 	// List documents with filters
 	yesterday := time.Now().AddDate(0, 0, -1)
 	opts := &reader.ListDocumentsOptions{
-		UpdatedAfter: &yesterday,
+		UpdatedAfter: yesterday,
 		Location:     reader.LocationNew,
 		Category:     reader.CategoryArticle,
 		Tag:          "programming",
