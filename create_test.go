@@ -166,7 +166,8 @@ func TestClient_CreateDocument(t *testing.T) {
 				}
 
 				if tt.errType != "" {
-					if clientErr, ok := err.(*ClientError); ok {
+					var clientErr *ClientError
+					if errors.As(err, &clientErr) {
 						if clientErr.Type != tt.errType {
 							t.Errorf("Expected error type %s, got %s", tt.errType, clientErr.Type)
 						}
