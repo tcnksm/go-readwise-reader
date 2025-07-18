@@ -45,7 +45,7 @@ func ExampleClient_CreateDocument_withAllFields() {
 		Title:         "Complete Article Example",
 		Author:        "Jane Doe",
 		Summary:       "This is a complete example of creating a document with all fields",
-		PublishedDate: publishedDate,
+		PublishedDate: &publishedDate,
 		Tags:          []string{"example", "complete", "documentation"},
 		Location:      reader.LocationNew,
 		Category:      reader.CategoryArticle,

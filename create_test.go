@@ -57,7 +57,7 @@ func TestClient_CreateDocument(t *testing.T) {
 				Title:         "Complete Article",
 				Author:        "John Doe",
 				Summary:       "A complete test article",
-				PublishedDate: time.Date(2023, 1, 1, 12, 0, 0, 0, time.UTC),
+				PublishedDate: timePtr(time.Date(2023, 1, 1, 12, 0, 0, 0, time.UTC)),
 				Tags:          []string{"complete", "test"},
 				Location:      LocationNew,
 				Category:      CategoryArticle,

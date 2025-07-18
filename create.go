@@ -27,7 +27,7 @@ type CreateDocumentRequest struct {
 	Summary string `json:"summary,omitempty"`
 
 	// PublishedDate is when the document was published (optional)
-	PublishedDate time.Time `json:"published_date,omitempty"`
+	PublishedDate *time.Time `json:"published_date,omitempty"`
 
 	// Tags is a list of tags to associate with the document (optional)
 	Tags []string `json:"tags,omitempty"`

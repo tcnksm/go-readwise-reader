@@ -41,7 +41,7 @@ type ListDocumentsOptions struct {
 	ID string `url:"id,omitempty"`
 
 	// UpdatedAfter fetches documents updated after this time
-	UpdatedAfter time.Time `url:"updatedAfter,omitempty"`
+	UpdatedAfter *time.Time `url:"updatedAfter,omitempty"`
 
 	// Location filters by document location
 	Location Location `url:"location,omitempty"`
@@ -95,10 +95,10 @@ type Document struct {
 	Location Location `json:"location"`
 
 	// CreatedAt is when the document was added
-	CreatedAt time.Time `json:"created_at"`
+	CreatedAt *time.Time `json:"created_at"`
 
 	// UpdatedAt is when the document was last updated
-	UpdatedAt time.Time `json:"updated_at"`
+	UpdatedAt *time.Time `json:"updated_at"`
 
 	// Summary of the document
 	Summary string `json:"summary"`
@@ -127,7 +127,7 @@ func (c *client) ListDocuments(ctx context.Context, opts *ListDocumentsOptions) 
 	if opts.ID != "" {
 		q.Set("id", opts.ID)
 	}
-	if !opts.UpdatedAfter.IsZero() {
+	if opts.UpdatedAfter != nil {
 		q.Set("updatedAfter", opts.UpdatedAfter.Format(time.RFC3339))
 	}
 	if opts.Location != "" {

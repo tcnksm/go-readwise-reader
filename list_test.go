@@ -80,7 +80,7 @@ func TestListDocuments(t *testing.T) {
 		{
 			name: "list with updated after filter",
 			opts: &ListDocumentsOptions{
-				UpdatedAfter: time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC),
+				UpdatedAfter: timePtr(time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC)),
 			},
 			responseStatus: http.StatusOK,
 			responseBody: ListDocumentsResponse{
