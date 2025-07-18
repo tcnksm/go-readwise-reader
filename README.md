@@ -4,7 +4,7 @@
 
 `go-readwise-reader` is a Go package to interact with [Readwise Reader API](https://readwise.io/reader_api).
 
-*NOTE*: This is mainly personal usage for own automation.
+*NOTE: This is unofficial and mainly for personal usage for own automation.*
 
 
 ## Install
