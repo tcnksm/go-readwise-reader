@@ -70,7 +70,7 @@ func TestClient_DeleteDocument(t *testing.T) {
 				}
 
 				// Verify URL path
-				expectedPath := "/delete/" + tt.documentID + "/"
+				expectedPath := "/api/v3/delete/" + tt.documentID + "/"
 				if tt.documentID != "" && r.URL.Path != expectedPath {
 					t.Errorf("Expected path %s, got %s", expectedPath, r.URL.Path)
 				}
