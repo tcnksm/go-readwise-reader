@@ -79,6 +79,9 @@ type Document struct {
 	// URL is the original URL of the document
 	URL string `json:"url"`
 
+	// SourceURL is the URL of the source of the document
+	SourceURL string `json:"source_url"`
+
 	// Title is the document title
 	Title string `json:"title"`
 
