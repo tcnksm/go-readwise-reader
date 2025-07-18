@@ -41,7 +41,7 @@ type ListDocumentsOptions struct {
 	ID string `url:"id,omitempty"`
 
 	// UpdatedAfter fetches documents updated after this time
-	UpdatedAfter *time.Time `url:"updatedAfter,omitempty"`
+	UpdatedAfter time.Time `url:"updatedAfter,omitempty"`
 
 	// Location filters by document location
 	Location Location `url:"location,omitempty"`
@@ -86,7 +86,7 @@ type Document struct {
 	Title string `json:"title"`
 
 	// Author is the document author
-	Author *string `json:"author"`
+	Author string `json:"author"`
 
 	// Category is the document type
 	Category Category `json:"category"`
@@ -101,13 +101,13 @@ type Document struct {
 	UpdatedAt time.Time `json:"updated_at"`
 
 	// Summary of the document
-	Summary *string `json:"summary"`
+	Summary string `json:"summary"`
 
 	// ReadingProgressPercent is the reading progress (0-100)
 	ReadingProgressPercent float64 `json:"reading_progress_percent"`
 
 	// WordCount is the number of words in the document
-	WordCount *int `json:"word_count"`
+	WordCount int `json:"word_count"`
 }
 
 // ListDocuments retrieves documents from Readwise Reader
@@ -127,7 +127,7 @@ func (c *client) ListDocuments(ctx context.Context, opts *ListDocumentsOptions) 
 	if opts.ID != "" {
 		q.Set("id", opts.ID)
 	}
-	if opts.UpdatedAfter != nil {
+	if !opts.UpdatedAfter.IsZero() {
 		q.Set("updatedAfter", opts.UpdatedAfter.Format(time.RFC3339))
 	}
 	if opts.Location != "" {
