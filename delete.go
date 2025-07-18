@@ -17,7 +17,7 @@ func (c *client) DeleteDocument(ctx context.Context, documentID string) error {
 		}
 	}
 
-	url := fmt.Sprintf("%s/api/v3/delete/%s/", c.baseURL, documentID)
+	url := fmt.Sprintf("%s/delete/%s/", c.baseURL, documentID)
 
 	req, err := http.NewRequestWithContext(ctx, "DELETE", url, nil)
 	if err != nil {
