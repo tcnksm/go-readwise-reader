@@ -244,3 +244,7 @@ Always refer to https://readwise.io/reader_api for:
 5. Add `update.go` - UpdateDocument API
 6. Add `delete.go` - DeleteDocument API
 7. Continue with other endpoints as needed
+
+## Development Reminders
+
+- Update docs/TODO*.md before sending PR.

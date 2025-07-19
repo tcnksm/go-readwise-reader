@@ -1,0 +1,4 @@
+github.com/google/subcommands v1.2.0 h1:vWQspBTo2nEqTUFita5/KeEWlUL8kQObDFbub/EN9oE=
+github.com/google/subcommands v1.2.0/go.mod h1:ZjhPrFU+Olkh9WazFPsl27BQ4UPiG37m3yTrtFlrHVk=
+github.com/tcnksm/go-readwise-reader v0.0.0-20250719025658-07680740a207 h1:943zAdUgjpstm4ycnG+EKuvw/BMiOShLJ68Y9+krjtY=
+github.com/tcnksm/go-readwise-reader v0.0.0-20250719025658-07680740a207/go.mod h1:oaFFzzo2WzSI71Ud/3dKnNwmrqwqqMp5gfsDoQ3IIow=
