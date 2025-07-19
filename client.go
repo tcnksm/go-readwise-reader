@@ -15,7 +15,7 @@ const (
 // Client interface for interacting with Readwise Reader API
 type Client interface {
 	ListDocuments(ctx context.Context, opts *ListDocumentsOptions) (*ListDocumentsResponse, error)
-	CreateDocument(ctx context.Context, req *CreateDocumentRequest) (*CreateDocumentResponse, error)
+	CreateDocument(ctx context.Context, url string, req *CreateDocumentRequest) (*CreateDocumentResponse, error)
 	UpdateDocument(ctx context.Context, documentID string, req *UpdateDocumentRequest) (*UpdateDocumentResponse, error)
 	DeleteDocument(ctx context.Context, documentID string) error
 }

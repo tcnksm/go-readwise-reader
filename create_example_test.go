@@ -15,14 +15,14 @@ func ExampleClient_CreateDocument() {
 		log.Fatal(err)
 	}
 
+	url := "https://example.com/article"
 	req := &reader.CreateDocumentRequest{
-		URL:   "https://example.com/article",
 		Title: "Interesting Article",
 		Tags:  []string{"golang", "api"},
 	}
 
 	ctx := context.Background()
-	resp, err := client.CreateDocument(ctx, req)
+	resp, err := client.CreateDocument(ctx, url, req)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -39,8 +39,8 @@ func ExampleClient_CreateDocument_withAllFields() {
 
 	publishedDate := time.Date(2023, 12, 1, 10, 0, 0, 0, time.UTC)
 
+	url := "https://example.com/complete-article"
 	req := &reader.CreateDocumentRequest{
-		URL:           "https://example.com/complete-article",
 		HTML:          "<html><body><h1>Complete Article</h1><p>Content here</p></body></html>",
 		Title:         "Complete Article Example",
 		Author:        "Jane Doe",
@@ -53,7 +53,7 @@ func ExampleClient_CreateDocument_withAllFields() {
 	}
 
 	ctx := context.Background()
-	resp, err := client.CreateDocument(ctx, req)
+	resp, err := client.CreateDocument(ctx, url, req)
 	if err != nil {
 		log.Fatal(err)
 	}
