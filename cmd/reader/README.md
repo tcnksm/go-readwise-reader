@@ -40,6 +40,17 @@ reader create https://example.com/blog/interesting-article
 
 Returns the created document as pretty-printed JSON.
 
+### Update Document
+
+Update existing document properties:
+
+```bash
+reader update --title "New Title" 01k0g64pkqq9w6vh6mz7jtwbvv
+reader update --location later --category article 01k0g64pkqq9w6vh6mz7jtwbvv
+```
+
+At least one field must be specified. Returns updated document as JSON.
+
 ### Delete Document
 
 Remove a document by ID:
