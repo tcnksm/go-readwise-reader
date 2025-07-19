@@ -8,8 +8,6 @@ import (
 	"github.com/google/subcommands"
 )
 
-
-
 func main() {
 	subcommands.Register(subcommands.HelpCommand(), "")
 	subcommands.Register(subcommands.FlagsCommand(), "")
@@ -17,6 +15,7 @@ func main() {
 
 	subcommands.Register(&listCmd{}, "")
 	subcommands.Register(&createCmd{}, "")
+	subcommands.Register(&updateCmd{}, "")
 	subcommands.Register(&deleteCmd{}, "")
 
 	flag.Parse()

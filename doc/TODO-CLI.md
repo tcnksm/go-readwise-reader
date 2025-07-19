@@ -215,8 +215,51 @@ Error: document not found
 
 ## Future Enhancements
 
+### Update Command (`update.go`) ✅ IMPLEMENTED
+
+**Core Implementation:**
+- ✅ Updates existing document properties via PATCH API
+- ✅ Requires document ID as positional argument  
+- ✅ Requires at least one field flag to be provided
+- ✅ Returns updated document as pretty-printed JSON
+- ✅ Uses baseCommand pattern for client initialization
+
+**Update Flags:** ✅ ALL FIELDS SUPPORTED
+- ✅ `--title` - Update document title
+- ✅ `--author` - Update document author
+- ✅ `--summary` - Update document summary
+- ✅ `--location` - Update location (new, later, archive, feed)
+- ✅ `--category` - Update category (article, email, rss, pdf, epub, tweet, video, highlight)
+- ✅ `--image-url` - Update document image URL
+- ✅ `--published-date` - Update published date (RFC3339 format)
+
+**Validation:**
+- ✅ Requires at least one update field (fails if no flags provided)
+- ✅ Validates location and category enum values
+- ✅ Validates published date RFC3339 format
+- ✅ Provides helpful error messages for invalid values
+
+**Usage Examples:**
+```bash
+# Single field updates
+./reader update --title "New Title" <document-id>
+./reader update --location later <document-id>
+./reader update --category article <document-id>
+
+# Multiple field updates
+./reader update --title "New Title" --author "John Doe" <document-id>
+./reader update --location archive --category article <document-id>
+
+# Date update (RFC3339 format)
+./reader update --published-date "2023-01-01T00:00:00Z" <document-id>
+
+# Error cases (properly handled)
+./reader update <document-id>                    # Error: at least one field required
+./reader update --location invalid <document-id> # Error: invalid location value
+```
+
 ### Phase 4: Additional Commands
-- [ ] `reader update <id>` - Update document properties
+- [x] `reader update <id>` - Update document properties ✅ IMPLEMENTED
 
 ## Dependencies
 
