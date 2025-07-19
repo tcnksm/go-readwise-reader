@@ -124,8 +124,15 @@ cmd/reader/
 - ✅ `--location` flag (new, later, archive, feed) - defaults to "new"
 - ✅ `--category` flag (article, email, rss, pdf, epub, tweet, video, highlight)
 - ✅ `--tag` flag for filtering by single tag name
+- ✅ `--since` flag for time-based filtering using Go duration format
 - ✅ Flag validation with helpful error messages
 - ✅ Support for combining multiple filters
+
+**Time-based Filtering (`--since`):** ✅ IMPLEMENTED
+- Uses standard Go `time.ParseDuration` for consistent behavior
+- Supports: seconds (`30s`), minutes (`30m`), hours (`24h`), complex (`1h30m`)
+- Calculates time "duration ago" from current time for `UpdatedAfter` API
+- Proper error handling for invalid duration formats
 
 **Usage Examples:**
 ```bash
@@ -134,11 +141,14 @@ cmd/reader/
 ./reader list -category article         # Articles only  
 ./reader list -location new -category rss  # Combined filters
 ./reader list -tag "ai"                 # Tag filtering
+./reader list -since 1h                 # Documents updated in last hour
+./reader list -since 24h                # Documents updated in last day
+./reader list -since 1h30m              # Documents updated in last 1.5 hours
+./reader list -since 24h -category article  # Recent articles
 ```
 
 **TODO for future phases:**
 - Add `--limit` flag for pagination control
-- Add `--updated-after` flag for time-based filtering
 - Add pagination support (currently single page only)
 
 ### Create Command (`create.go`) ✅ IMPLEMENTED

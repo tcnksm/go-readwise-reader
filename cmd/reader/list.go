@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"time"
 
 	"github.com/google/subcommands"
 	reader "github.com/tcnksm/go-readwise-reader"
@@ -14,6 +15,7 @@ type listCmd struct {
 	location string
 	category string
 	tag      string
+	since    string
 }
 
 func (*listCmd) Name() string { return "list" }
@@ -29,12 +31,14 @@ Flags:
   -location   Filter by location (new, later, archive, feed). Default: new
   -category   Filter by category (article, email, rss, pdf, epub, tweet, video, highlight)
   -tag        Filter by tag name
+  -since      Filter documents updated since duration ago (e.g., 10s, 30m, 24h)
 `
 }
 func (c *listCmd) SetFlags(f *flag.FlagSet) {
 	f.StringVar(&c.location, "location", "new", "Filter by location (new, later, archive, feed)")
 	f.StringVar(&c.category, "category", "", "Filter by category (article, email, rss, pdf, epub, tweet, video, highlight)")
 	f.StringVar(&c.tag, "tag", "", "Filter by tag name")
+	f.StringVar(&c.since, "since", "", "Filter documents updated since duration ago (e.g., 10s, 30m, 24h)")
 }
 
 func (c *listCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
@@ -86,11 +90,26 @@ func (c *listCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface{}
 		}
 	}
 
+	// Parse since duration if provided
+	var updatedAfter *time.Time
+	if c.since != "" {
+		duration, err := time.ParseDuration(c.since)
+		if err != nil {
+			printError(fmt.Errorf("invalid duration format: %s. Use formats like 10s, 30m, 24h", c.since))
+			return subcommands.ExitUsageError
+		}
+
+		// Calculate time "duration" ago from now
+		timeAgo := time.Now().Add(-duration)
+		updatedAfter = &timeAgo
+	}
+
 	// Set up options for ListDocuments
 	opts := &reader.ListDocumentsOptions{
-		Location: location,
-		Category: category,
-		Tag:      c.tag,
+		Location:     location,
+		Category:     category,
+		Tag:          c.tag,
+		UpdatedAfter: updatedAfter,
 	}
 
 	// Call ListDocuments API
