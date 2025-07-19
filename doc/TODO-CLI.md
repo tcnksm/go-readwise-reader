@@ -113,18 +113,33 @@ cmd/reader/
 
 ### List Command (`list.go`) ✅ IMPLEMENTED
 
-- ✅ Lists documents from "new" location only
+**Core Implementation:**
+- ✅ Lists documents with flexible filtering options
 - ✅ Outputs pretty-printed JSON array of documents
 - ✅ Uses baseCommand pattern for client initialization
 - ✅ Handles errors with proper exit codes
 - ✅ TODO added for future pagination implementation
 
+**Filtering Flags:** ✅ IMPLEMENTED
+- ✅ `--location` flag (new, later, archive, feed) - defaults to "new"
+- ✅ `--category` flag (article, email, rss, pdf, epub, tweet, video, highlight)
+- ✅ `--tag` flag for filtering by single tag name
+- ✅ Flag validation with helpful error messages
+- ✅ Support for combining multiple filters
+
+**Usage Examples:**
+```bash
+./reader list                           # Default: new location
+./reader list -location later           # Later location only
+./reader list -category article         # Articles only  
+./reader list -location new -category rss  # Combined filters
+./reader list -tag "ai"                 # Tag filtering
+```
+
 **TODO for future phases:**
-- Add `--location` flag (new, later, archive, feed)
-- Add `--category` flag (article, email, rss, pdf, epub, tweet, video, highlight)
-- Add `--tag` flag for filtering by tags
 - Add `--limit` flag for pagination control
 - Add `--updated-after` flag for time-based filtering
+- Add pagination support (currently single page only)
 
 ### Create Command (`create.go`) ✅ IMPLEMENTED
 

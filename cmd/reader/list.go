@@ -11,19 +11,31 @@ import (
 
 type listCmd struct {
 	baseCommand
+	location string
+	category string
+	tag      string
 }
 
 func (*listCmd) Name() string { return "list" }
 func (*listCmd) Synopsis() string {
-	return "List documents in new location"
+	return "List documents with optional filtering"
 }
 func (*listCmd) Usage() string {
-	return `list:
-  List all documents in the new location.
+	return `list [flags]:
+  List documents with optional filtering.
   Output is pretty-printed JSON array.
+
+Flags:
+  -location   Filter by location (new, later, archive, feed). Default: new
+  -category   Filter by category (article, email, rss, pdf, epub, tweet, video, highlight)
+  -tag        Filter by tag name
 `
 }
-func (*listCmd) SetFlags(f *flag.FlagSet) {}
+func (c *listCmd) SetFlags(f *flag.FlagSet) {
+	f.StringVar(&c.location, "location", "new", "Filter by location (new, later, archive, feed)")
+	f.StringVar(&c.category, "category", "", "Filter by category (article, email, rss, pdf, epub, tweet, video, highlight)")
+	f.StringVar(&c.tag, "tag", "", "Filter by tag name")
+}
 
 func (c *listCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
 	// Initialize client
@@ -32,9 +44,53 @@ func (c *listCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface{}
 		return subcommands.ExitFailure
 	}
 
-	// Set up options for ListDocuments - Phase 2 lists only new location
+	// Validate location
+	var location reader.Location
+	switch c.location {
+	case "new":
+		location = reader.LocationNew
+	case "later":
+		location = reader.LocationLater
+	case "archive":
+		location = reader.LocationArchive
+	case "feed":
+		location = reader.LocationFeed
+	default:
+		printError(fmt.Errorf("invalid location: %s. Valid values: new, later, archive, feed", c.location))
+		return subcommands.ExitUsageError
+	}
+
+	// Validate category
+	var category reader.Category
+	if c.category != "" {
+		switch c.category {
+		case "article":
+			category = reader.CategoryArticle
+		case "email":
+			category = reader.CategoryEmail
+		case "rss":
+			category = reader.CategoryRSS
+		case "pdf":
+			category = reader.CategoryPDF
+		case "epub":
+			category = reader.CategoryEPUB
+		case "tweet":
+			category = reader.CategoryTweet
+		case "video":
+			category = reader.CategoryVideo
+		case "highlight":
+			category = reader.CategoryHighlight
+		default:
+			printError(fmt.Errorf("invalid category: %s. Valid values: article, email, rss, pdf, epub, tweet, video, highlight", c.category))
+			return subcommands.ExitUsageError
+		}
+	}
+
+	// Set up options for ListDocuments
 	opts := &reader.ListDocumentsOptions{
-		Location: reader.LocationNew,
+		Location: location,
+		Category: category,
+		Tag:      c.tag,
 	}
 
 	// Call ListDocuments API
