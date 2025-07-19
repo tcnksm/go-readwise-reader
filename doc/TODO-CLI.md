@@ -109,31 +109,15 @@ cmd/reader/
    }
    ```
 
-## Phase 2: Command Implementations
+## Phase 2: Command Implementations ✅ COMPLETED
 
-### List Command (`list.go`)
+### List Command (`list.go`) ✅ IMPLEMENTED
 
-```go
-type listCmd struct{}
-
-func (*listCmd) Name() string     { return "list" }
-func (*listCmd) Synopsis() string { return "List documents in new location" }
-func (*listCmd) Usage() string {
-    return `list:
-    List all documents in the new location.
-    Output is pretty-printed JSON array.
-`
-}
-
-func (c *listCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
-    // 1. Get token from environment
-    // 2. Create client
-    // 3. Call ListDocuments with Location: LocationNew
-    // 4. Handle pagination (fetch all pages)
-    // 5. Output pretty JSON
-    // 6. Handle errors appropriately
-}
-```
+- ✅ Lists documents from "new" location only
+- ✅ Outputs pretty-printed JSON array of documents
+- ✅ Uses baseCommand pattern for client initialization
+- ✅ Handles errors with proper exit codes
+- ✅ TODO added for future pagination implementation
 
 **TODO for future phases:**
 - Add `--location` flag (new, later, archive, feed)
@@ -142,28 +126,13 @@ func (c *listCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface{}
 - Add `--limit` flag for pagination control
 - Add `--updated-after` flag for time-based filtering
 
-### Create Command (`create.go`)
+### Create Command (`create.go`) ✅ IMPLEMENTED
 
-```go
-type createCmd struct{}
-
-func (*createCmd) Name() string     { return "create" }
-func (*createCmd) Synopsis() string { return "Create a new document" }
-func (*createCmd) Usage() string {
-    return `create <url>:
-    Create a new document from the specified URL.
-    Returns the created document as pretty-printed JSON.
-`
-}
-
-func (c *createCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
-    // 1. Parse URL from args
-    // 2. Get token and create client
-    // 3. Call CreateDocument with URL only
-    // 4. Output created document JSON
-    // 5. Handle errors
-}
-```
+- ✅ Accepts URL as command line argument
+- ✅ Creates document using CreateDocument API with minimal options
+- ✅ Outputs created document as pretty-printed JSON
+- ✅ Handles errors with proper exit codes and usage messages
+- ✅ Uses baseCommand pattern for client initialization
 
 **TODO for future phases:**
 - Add `--title` flag
@@ -171,28 +140,13 @@ func (c *createCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface
 - Add `--tags` flag
 - Support reading URLs from stdin for batch operations
 
-### Delete Command (`delete.go`)
+### Delete Command (`delete.go`) ✅ IMPLEMENTED
 
-```go
-type deleteCmd struct{}
-
-func (*deleteCmd) Name() string     { return "delete" }
-func (*deleteCmd) Synopsis() string { return "Delete a document" }
-func (*deleteCmd) Usage() string {
-    return `delete <document-id>:
-    Delete the document with the specified ID.
-    Returns success message or error.
-`
-}
-
-func (c *deleteCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
-    // 1. Parse document ID from args
-    // 2. Get token and create client
-    // 3. Call DeleteDocument
-    // 4. Output success confirmation
-    // 5. Handle errors
-}
-```
+- ✅ Accepts document ID as command line argument  
+- ✅ Deletes document using DeleteDocument API
+- ✅ Outputs success confirmation message
+- ✅ Handles errors with proper exit codes and usage messages
+- ✅ Uses baseCommand pattern for client initialization
 
 **TODO for future phases:**
 - Add `--confirm` flag for safety
