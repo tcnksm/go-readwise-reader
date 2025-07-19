@@ -9,17 +9,6 @@ import (
 	"github.com/google/subcommands"
 )
 
-// Stub command types - will be implemented in Phase 2
-type listCmd struct{}
-
-func (*listCmd) Name() string             { return "list" }
-func (*listCmd) Synopsis() string         { return "List documents (Phase 2)" }
-func (*listCmd) Usage() string            { return "list: List documents (Phase 2)\n" }
-func (*listCmd) SetFlags(f *flag.FlagSet) {}
-func (*listCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
-	fmt.Fprintln(os.Stderr, "list command not yet implemented (Phase 2)")
-	return subcommands.ExitFailure
-}
 
 type createCmd struct{}
 
