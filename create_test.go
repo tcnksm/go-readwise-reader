@@ -14,6 +14,7 @@ import (
 func TestClient_CreateDocument(t *testing.T) {
 	tests := []struct {
 		name           string
+		url            string
 		req            *CreateDocumentRequest
 		serverResponse string
 		serverStatus   int
@@ -23,8 +24,8 @@ func TestClient_CreateDocument(t *testing.T) {
 	}{
 		{
 			name: "successful_creation",
+			url:  "https://example.com/article",
 			req: &CreateDocumentRequest{
-				URL:   "https://example.com/article",
 				Title: "Test Article",
 				Tags:  []string{"test", "article"},
 			},
@@ -37,10 +38,9 @@ func TestClient_CreateDocument(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "existing_document",
-			req: &CreateDocumentRequest{
-				URL: "https://example.com/existing",
-			},
+			name:           "existing_document",
+			url:            "https://example.com/existing",
+			req:            &CreateDocumentRequest{},
 			serverResponse: `{"id": "doc456", "url": "https://example.com/existing"}`,
 			serverStatus:   http.StatusOK,
 			want: &CreateDocumentResponse{
@@ -51,8 +51,8 @@ func TestClient_CreateDocument(t *testing.T) {
 		},
 		{
 			name: "complete_request",
+			url:  "https://example.com/complete",
 			req: &CreateDocumentRequest{
-				URL:           "https://example.com/complete",
 				HTML:          "<html><body>Content</body></html>",
 				Title:         "Complete Article",
 				Author:        "John Doe",
@@ -72,33 +72,36 @@ func TestClient_CreateDocument(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name:    "nil_request",
+			name:    "empty_url",
+			url:     "",
 			req:     nil,
 			wantErr: true,
 			errType: "invalid_request",
 		},
 		{
-			name: "empty_url",
-			req: &CreateDocumentRequest{
-				Title: "No URL",
+			name:           "nil_request_with_url",
+			url:            "https://example.com/nil-request",
+			req:            nil,
+			serverResponse: `{"id": "doc999", "url": "https://example.com/nil-request"}`,
+			serverStatus:   http.StatusCreated,
+			want: &CreateDocumentResponse{
+				ID:  "doc999",
+				URL: "https://example.com/nil-request",
 			},
-			wantErr: true,
-			errType: "invalid_request",
+			wantErr: false,
 		},
 		{
-			name: "server_error",
-			req: &CreateDocumentRequest{
-				URL: "https://example.com/error",
-			},
+			name:           "server_error",
+			url:            "https://example.com/error",
+			req:            &CreateDocumentRequest{},
 			serverResponse: `{"error": "internal server error"}`,
 			serverStatus:   http.StatusInternalServerError,
 			wantErr:        true,
 		},
 		{
-			name: "bad_request",
-			req: &CreateDocumentRequest{
-				URL: "invalid-url",
-			},
+			name:           "bad_request",
+			url:            "invalid-url",
+			req:            &CreateDocumentRequest{},
 			serverResponse: `{"error": "invalid URL"}`,
 			serverStatus:   http.StatusBadRequest,
 			wantErr:        true,
@@ -128,16 +131,17 @@ func TestClient_CreateDocument(t *testing.T) {
 					t.Errorf("Expected Content-Type application/json, got %s", contentType)
 				}
 
-				// Verify request body if not nil request
-				if tt.req != nil {
-					var reqBody CreateDocumentRequest
-					if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
-						t.Errorf("Failed to decode request body: %v", err)
-					}
+				// Verify request body
+				var reqBody struct {
+					URL string `json:"url"`
+					*CreateDocumentRequest
+				}
+				if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
+					t.Errorf("Failed to decode request body: %v", err)
+				}
 
-					if reqBody.URL != tt.req.URL {
-						t.Errorf("Expected URL %s, got %s", tt.req.URL, reqBody.URL)
-					}
+				if reqBody.URL != tt.url {
+					t.Errorf("Expected URL %s, got %s", tt.url, reqBody.URL)
 				}
 
 				w.Header().Set("Content-Type", "application/json")
@@ -157,7 +161,7 @@ func TestClient_CreateDocument(t *testing.T) {
 
 			// Execute test
 			ctx := context.Background()
-			got, err := client.CreateDocument(ctx, tt.req)
+			got, err := client.CreateDocument(ctx, tt.url, tt.req)
 
 			// Check error
 			if tt.wantErr {

@@ -11,9 +11,6 @@ import (
 
 // CreateDocumentRequest represents the request to create a document
 type CreateDocumentRequest struct {
-	// URL is the unique URL of the document (required)
-	URL string `json:"url"`
-
 	// HTML is the document content in valid HTML format (optional)
 	HTML string `json:"html,omitempty"`
 
@@ -54,23 +51,29 @@ type CreateDocumentResponse struct {
 }
 
 // CreateDocument creates a new document in Readwise Reader
-func (c *client) CreateDocument(ctx context.Context, req *CreateDocumentRequest) (*CreateDocumentResponse, error) {
-	if req == nil {
-		return nil, &ClientError{
-			Type:    "invalid_request",
-			Message: "request cannot be nil",
-		}
-	}
-
-	if req.URL == "" {
+func (c *client) CreateDocument(ctx context.Context, url string, req *CreateDocumentRequest) (*CreateDocumentResponse, error) {
+	if url == "" {
 		return nil, &ClientError{
 			Type:    "invalid_request",
 			Message: "URL is required",
 		}
 	}
 
+	if req == nil {
+		req = &CreateDocumentRequest{}
+	}
+
+	// Create request body with URL and other fields
+	reqBody := struct {
+		URL string `json:"url"`
+		*CreateDocumentRequest
+	}{
+		URL:                   url,
+		CreateDocumentRequest: req,
+	}
+
 	// Prepare request body
-	body, err := json.Marshal(req)
+	body, err := json.Marshal(reqBody)
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal request: %w", err)
 	}
