@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"io"
 	"os"
 
 	"github.com/google/subcommands"
@@ -37,7 +38,7 @@ func (*createCmd) Usage() string {
     -summary string      Brief summary of the document
     -title string        Document title
     -author string       Document author
-    -html string         Document content in valid HTML format
+    -html string         Document content in valid HTML format (use "-" to read from stdin)
 `
 }
 func (c *createCmd) SetFlags(f *flag.FlagSet) {
@@ -85,7 +86,17 @@ func (c *createCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface
 		req.Author = c.author
 	}
 	if c.html != "" {
-		req.HTML = c.html
+		if c.html == "-" {
+			// Read HTML content from stdin
+			htmlBytes, err := io.ReadAll(os.Stdin)
+			if err != nil {
+				printError(fmt.Errorf("failed to read HTML from stdin: %w", err))
+				return subcommands.ExitFailure
+			}
+			req.HTML = string(htmlBytes)
+		} else {
+			req.HTML = c.html
+		}
 		// Enable HTML cleaning when HTML is provided
 		req.ShouldCleanHTML = true
 	}
