@@ -7,10 +7,19 @@ import (
 	"os"
 
 	"github.com/google/subcommands"
+	reader "github.com/tcnksm/go-readwise-reader"
 )
 
 type createCmd struct {
 	baseCommand
+
+	// Flag values
+	location string
+	notes    string
+	summary  string
+	title    string
+	author   string
+	html     string
 }
 
 func (*createCmd) Name() string { return "create" }
@@ -18,12 +27,27 @@ func (*createCmd) Synopsis() string {
 	return "Create a new document"
 }
 func (*createCmd) Usage() string {
-	return `create <url>:
+	return `create [flags] <url>:
   Create a new document from the specified URL.
   Returns the created document as pretty-printed JSON.
+
+  Flags:
+    -location string     Document location (new, later, archive, feed)
+    -notes string        Top-level note for the document
+    -summary string      Brief summary of the document
+    -title string        Document title
+    -author string       Document author
+    -html string         Document content in valid HTML format
 `
 }
-func (*createCmd) SetFlags(f *flag.FlagSet) {}
+func (c *createCmd) SetFlags(f *flag.FlagSet) {
+	f.StringVar(&c.location, "location", "", "Document location (new, later, archive, feed)")
+	f.StringVar(&c.notes, "notes", "", "Top-level note for the document")
+	f.StringVar(&c.summary, "summary", "", "Brief summary of the document")
+	f.StringVar(&c.title, "title", "", "Document title")
+	f.StringVar(&c.author, "author", "", "Document author")
+	f.StringVar(&c.html, "html", "", "Document content in valid HTML format")
+}
 
 func (c *createCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
 	// Parse URL from args
@@ -40,8 +64,34 @@ func (c *createCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface
 		return subcommands.ExitFailure
 	}
 
-	// Call CreateDocument API with URL only (Phase 2 - minimal implementation)
-	response, err := c.client.CreateDocument(ctx, url, nil)
+	// Build CreateDocumentRequest from flags
+	req := &reader.CreateDocumentRequest{}
+
+	// Set fields only if flags were provided
+	if c.location != "" {
+		loc := reader.Location(c.location)
+		req.Location = loc
+	}
+	if c.notes != "" {
+		req.Notes = c.notes
+	}
+	if c.summary != "" {
+		req.Summary = c.summary
+	}
+	if c.title != "" {
+		req.Title = c.title
+	}
+	if c.author != "" {
+		req.Author = c.author
+	}
+	if c.html != "" {
+		req.HTML = c.html
+		// Enable HTML cleaning when HTML is provided
+		req.ShouldCleanHTML = true
+	}
+
+	// Call CreateDocument API
+	response, err := c.client.CreateDocument(ctx, url, req)
 	if err != nil {
 		printError(fmt.Errorf("failed to create document: %w", err))
 		return subcommands.ExitFailure

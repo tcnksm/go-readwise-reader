@@ -42,6 +42,10 @@ type CreateDocumentRequest struct {
 
 	// Notes is A top-level note of the document (optional)
 	Notes string `json:"notes,omitempty"`
+
+	// ShouldCleanHTML instructs Readwise to clean the provided HTML and parse metadata (optional)
+	// Only valid when HTML is provided. Defaults to false.
+	ShouldCleanHTML bool `json:"should_clean_html,omitempty"`
 }
 
 // CreateDocumentResponse represents the response from creating a document

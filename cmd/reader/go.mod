@@ -6,3 +6,5 @@ require (
 	github.com/google/subcommands v1.2.0
 	github.com/tcnksm/go-readwise-reader v0.0.0-20250720014538-4e24fff434fa
 )
+
+replace github.com/tcnksm/go-readwise-reader => ../../

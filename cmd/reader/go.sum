@@ -1,12 +1,2 @@
 github.com/google/subcommands v1.2.0 h1:vWQspBTo2nEqTUFita5/KeEWlUL8kQObDFbub/EN9oE=
 github.com/google/subcommands v1.2.0/go.mod h1:ZjhPrFU+Olkh9WazFPsl27BQ4UPiG37m3yTrtFlrHVk=
-github.com/tcnksm/go-readwise-reader v0.0.0-20250719025658-07680740a207 h1:943zAdUgjpstm4ycnG+EKuvw/BMiOShLJ68Y9+krjtY=
-github.com/tcnksm/go-readwise-reader v0.0.0-20250719025658-07680740a207/go.mod h1:oaFFzzo2WzSI71Ud/3dKnNwmrqwqqMp5gfsDoQ3IIow=
-github.com/tcnksm/go-readwise-reader v0.0.0-20250719071108-87d52b7ecfdc h1:FVzYkWN4Vnou/h7j66IRXm6R2M/okY3PREFRQoVazgA=
-github.com/tcnksm/go-readwise-reader v0.0.0-20250719071108-87d52b7ecfdc/go.mod h1:oaFFzzo2WzSI71Ud/3dKnNwmrqwqqMp5gfsDoQ3IIow=
-github.com/tcnksm/go-readwise-reader v0.0.0-20250720005848-81347591e15c h1:GwSI6Uj5Ec/I3yHZpftty/mZfaJYZ2j97j/Z1tc9XKg=
-github.com/tcnksm/go-readwise-reader v0.0.0-20250720005848-81347591e15c/go.mod h1:oaFFzzo2WzSI71Ud/3dKnNwmrqwqqMp5gfsDoQ3IIow=
-github.com/tcnksm/go-readwise-reader v0.0.0-20250720013844-7b7bb7ce2c9f h1:cQXw2AuR9l5F9g02MOWsgE4AFwzfWAE8CohchGL91fQ=
-github.com/tcnksm/go-readwise-reader v0.0.0-20250720013844-7b7bb7ce2c9f/go.mod h1:oaFFzzo2WzSI71Ud/3dKnNwmrqwqqMp5gfsDoQ3IIow=
-github.com/tcnksm/go-readwise-reader v0.0.0-20250720014538-4e24fff434fa h1:PhaPFm9iJ/fYD8wZt1lTfb5mqeIsqF1o1b3zBI+kNME=
-github.com/tcnksm/go-readwise-reader v0.0.0-20250720014538-4e24fff434fa/go.mod h1:oaFFzzo2WzSI71Ud/3dKnNwmrqwqqMp5gfsDoQ3IIow=
