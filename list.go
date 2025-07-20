@@ -108,6 +108,27 @@ type Document struct {
 
 	// WordCount is the number of words in the document
 	WordCount int `json:"word_count"`
+
+	// Source describes how the document was added
+	Source string `json:"source"`
+
+	// SiteName is the name of the website
+	SiteName string `json:"site_name"`
+
+	// FirstOpenedAt is when the document was first opened
+	FirstOpenedAt *time.Time `json:"first_opened_at"`
+
+	// LastOpenedAt is when the document was last opened
+	LastOpenedAt *time.Time `json:"last_opened_at"`
+
+	// SavedAt is when the document was initially saved
+	SavedAt *time.Time `json:"saved_at"`
+
+	// LastMovedAt is when the document was last moved between locations
+	LastMovedAt *time.Time `json:"last_moved_at"`
+
+	// PublishedDate is the original publication date (date only, no time)
+	PublishedDate string `json:"published_date"`
 }
 
 // ListDocuments retrieves documents from Readwise Reader
