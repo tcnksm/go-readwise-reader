@@ -129,9 +129,6 @@ type Document struct {
 
 	// LastMovedAt is when the document was last moved between locations
 	LastMovedAt *time.Time `json:"last_moved_at"`
-
-	// PublishedDate is the original publication date (date only, no time)
-	PublishedDate string `json:"published_date"`
 }
 
 // ListDocuments retrieves documents from Readwise Reader
