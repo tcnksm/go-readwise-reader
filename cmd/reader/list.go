@@ -12,6 +12,7 @@ import (
 
 type listCmd struct {
 	baseCommand
+	id       string
 	location string
 	category string
 	tag      string
@@ -29,6 +30,7 @@ func (*listCmd) Usage() string {
   Output is pretty-printed JSON array.
 
 Flags:
+  -id         Filter by document ID. Using this parameter it will return just one document, if found.	
   -location   Filter by location (new, later, archive, feed). Default: new
   -category   Filter by category (article, email, rss, pdf, epub, tweet, video, highlight)
   -tag        Filter by tag name
@@ -37,6 +39,7 @@ Flags:
 `
 }
 func (c *listCmd) SetFlags(f *flag.FlagSet) {
+	f.StringVar(&c.id, "id", "", "Filter by document ID. Using this parameter it will return just one document, if found.")
 	f.StringVar(&c.location, "location", "new", "Filter by location (new, later, archive, feed)")
 	f.StringVar(&c.category, "category", "", "Filter by category (article, email, rss, pdf, epub, tweet, video, highlight)")
 	f.StringVar(&c.tag, "tag", "", "Filter by tag name")
@@ -109,6 +112,7 @@ func (c *listCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface{}
 
 	// Set up options for ListDocuments
 	opts := &reader.ListDocumentsOptions{
+		ID:              c.id,
 		Location:        location,
 		Category:        category,
 		Tag:             c.tag,
