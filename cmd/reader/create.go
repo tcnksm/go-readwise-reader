@@ -34,7 +34,7 @@ func (*createCmd) Usage() string {
 
   Flags:
     -location string     Document location (new, later, archive, feed)
-    -notes string        Top-level note for the document
+    -notes string        Top-level note for the document (use "-" to read from stdin)
     -summary string      Brief summary of the document
     -title string        Document title
     -author string       Document author
@@ -43,7 +43,7 @@ func (*createCmd) Usage() string {
 }
 func (c *createCmd) SetFlags(f *flag.FlagSet) {
 	f.StringVar(&c.location, "location", "", "Document location (new, later, archive, feed)")
-	f.StringVar(&c.notes, "notes", "", "Top-level note for the document")
+	f.StringVar(&c.notes, "notes", "", "Top-level note for the document (use '-' to read from stdin)")
 	f.StringVar(&c.summary, "summary", "", "Brief summary of the document")
 	f.StringVar(&c.title, "title", "", "Document title")
 	f.StringVar(&c.author, "author", "", "Document author")
@@ -58,6 +58,12 @@ func (c *createCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface
 		return subcommands.ExitUsageError
 	}
 	url := args[0]
+
+	// Validate that both -notes - and -html - are not used together
+	if c.notes == "-" && c.html == "-" {
+		fmt.Fprintf(os.Stderr, "Error: cannot use both -notes and -html with stdin input\n")
+		return subcommands.ExitUsageError
+	}
 
 	// Initialize client
 	if err := c.initClient(ctx); err != nil {
@@ -74,7 +80,17 @@ func (c *createCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface
 		req.Location = loc
 	}
 	if c.notes != "" {
-		req.Notes = c.notes
+		if c.notes == "-" {
+			// Read notes content from stdin
+			notesBytes, err := io.ReadAll(os.Stdin)
+			if err != nil {
+				printError(fmt.Errorf("failed to read notes from stdin: %w", err))
+				return subcommands.ExitFailure
+			}
+			req.Notes = string(notesBytes)
+		} else {
+			req.Notes = c.notes
+		}
 	}
 	if c.summary != "" {
 		req.Summary = c.summary
