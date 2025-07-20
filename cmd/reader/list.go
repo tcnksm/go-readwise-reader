@@ -16,6 +16,7 @@ type listCmd struct {
 	category string
 	tag      string
 	since    string
+	html     bool
 }
 
 func (*listCmd) Name() string { return "list" }
@@ -32,6 +33,7 @@ Flags:
   -category   Filter by category (article, email, rss, pdf, epub, tweet, video, highlight)
   -tag        Filter by tag name
   -since      Filter documents updated since duration ago (e.g., 10s, 30m, 24h)
+  -html       Include HTML content in the response
 `
 }
 func (c *listCmd) SetFlags(f *flag.FlagSet) {
@@ -39,6 +41,7 @@ func (c *listCmd) SetFlags(f *flag.FlagSet) {
 	f.StringVar(&c.category, "category", "", "Filter by category (article, email, rss, pdf, epub, tweet, video, highlight)")
 	f.StringVar(&c.tag, "tag", "", "Filter by tag name")
 	f.StringVar(&c.since, "since", "", "Filter documents updated since duration ago (e.g., 10s, 30m, 24h)")
+	f.BoolVar(&c.html, "html", false, "Include HTML content in the response")
 }
 
 func (c *listCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
@@ -106,10 +109,11 @@ func (c *listCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface{}
 
 	// Set up options for ListDocuments
 	opts := &reader.ListDocumentsOptions{
-		Location:     location,
-		Category:     category,
-		Tag:          c.tag,
-		UpdatedAfter: updatedAfter,
+		Location:        location,
+		Category:        category,
+		Tag:             c.tag,
+		UpdatedAfter:    updatedAfter,
+		WithHTMLContent: c.html,
 	}
 
 	// Call ListDocuments API
