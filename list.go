@@ -103,6 +103,9 @@ type Document struct {
 	// Summary of the document
 	Summary string `json:"summary"`
 
+	// HTMLContent is the HTML content of the document (only available if WithHTMLContent is true)
+	HTMLContent string `json:"html_content"`
+
 	// ReadingProgressPercent is the reading progress (0-100)
 	ReadingProgressPercent float64 `json:"reading_progress_percent"`
 
