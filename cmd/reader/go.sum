@@ -6,3 +6,5 @@ github.com/tcnksm/go-readwise-reader v0.0.0-20250719071108-87d52b7ecfdc h1:FVzYk
 github.com/tcnksm/go-readwise-reader v0.0.0-20250719071108-87d52b7ecfdc/go.mod h1:oaFFzzo2WzSI71Ud/3dKnNwmrqwqqMp5gfsDoQ3IIow=
 github.com/tcnksm/go-readwise-reader v0.0.0-20250720005848-81347591e15c h1:GwSI6Uj5Ec/I3yHZpftty/mZfaJYZ2j97j/Z1tc9XKg=
 github.com/tcnksm/go-readwise-reader v0.0.0-20250720005848-81347591e15c/go.mod h1:oaFFzzo2WzSI71Ud/3dKnNwmrqwqqMp5gfsDoQ3IIow=
+github.com/tcnksm/go-readwise-reader v0.0.0-20250720013844-7b7bb7ce2c9f h1:cQXw2AuR9l5F9g02MOWsgE4AFwzfWAE8CohchGL91fQ=
+github.com/tcnksm/go-readwise-reader v0.0.0-20250720013844-7b7bb7ce2c9f/go.mod h1:oaFFzzo2WzSI71Ud/3dKnNwmrqwqqMp5gfsDoQ3IIow=
