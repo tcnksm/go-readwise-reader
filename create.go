@@ -39,6 +39,9 @@ type CreateDocumentRequest struct {
 
 	// ImageURL is the URL of an image associated with the document (optional)
 	ImageURL string `json:"image_url,omitempty"`
+
+	// Notes is A top-level note of the document (optional)
+	Notes string `json:"notes,omitempty"`
 }
 
 // CreateDocumentResponse represents the response from creating a document
