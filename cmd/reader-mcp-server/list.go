@@ -13,28 +13,28 @@ import (
 
 func toolList(client reader.Client) (mcp.Tool, server.ToolHandlerFunc) {
 	return mcp.NewTool(
-		"list",
-		mcp.WithDescription("List documents from Readwise Reader"),
-		mcp.WithToolAnnotation(
-			mcp.ToolAnnotation{
-				Title:        "List documents from Readwise Reader",
-				ReadOnlyHint: ToBoolPtr(true),
-			},
+			"list",
+			mcp.WithDescription("List documents from Readwise Reader"),
+			mcp.WithToolAnnotation(
+				mcp.ToolAnnotation{
+					Title:        "List documents from Readwise Reader",
+					ReadOnlyHint: ToBoolPtr(true),
+				},
+			),
+			mcp.WithString(
+				"location",
+				mcp.Description("Location of documents: new, later, archive, or feed"),
+				mcp.Required(),
+			),
+			mcp.WithString(
+				"since",
+				mcp.Description("Filter documents updated since duration ago (e.g., 10s, 30m, 24h) (default: 12h)"),
+			),
+			mcp.WithNumber(
+				"limit",
+				mcp.Description("Maximum number of documents to return (default: 5)"),
+			),
 		),
-		mcp.WithString(
-			"location",
-			mcp.Description("Location of documents: new, later, archive, or feed"),
-			mcp.Required(),
-		),
-		mcp.WithString(
-			"since",
-			mcp.Description("Filter documents updated since duration ago (e.g., 10s, 30m, 24h) (default: 12h)"),
-		),
-		mcp.WithNumber(
-			"limit",
-			mcp.Description("Maximum number of documents to return (default: 5)"),
-		),
-	),
 		func(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 			// Extract parameters
 			location, err := req.RequireString("location")
@@ -73,6 +73,7 @@ func toolList(client reader.Client) (mcp.Tool, server.ToolHandlerFunc) {
 
 			// Handle limit parameter
 			limit := int(req.GetFloat("limit", 5))
+
 			if limit <= 0 {
 				return mcp.NewToolResultError("limit must be greater than 0"), nil
 			}
