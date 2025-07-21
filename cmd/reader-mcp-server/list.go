@@ -23,7 +23,7 @@ func toolList(client reader.Client) (mcp.Tool, server.ToolHandlerFunc) {
 			),
 			mcp.WithString(
 				"location",
-				mcp.Description("Location of documents: new, later, archive, or feed"),
+				mcp.Description("Location of documents: new, inbox, later, archive, or feed"),
 				mcp.Required(),
 			),
 			mcp.WithString(
@@ -45,7 +45,7 @@ func toolList(client reader.Client) (mcp.Tool, server.ToolHandlerFunc) {
 			// Validate location
 			var loc reader.Location
 			switch location {
-			case "new":
+			case "new", "inbox":
 				loc = reader.LocationNew
 			case "later":
 				loc = reader.LocationLater
@@ -54,7 +54,7 @@ func toolList(client reader.Client) (mcp.Tool, server.ToolHandlerFunc) {
 			case "feed":
 				loc = reader.LocationFeed
 			default:
-				return mcp.NewToolResultError("invalid location: must be one of new, later, archive, or feed"), nil
+				return mcp.NewToolResultError("invalid location: must be one of new, inbox, later, archive, or feed"), nil
 			}
 
 			// Parse optional parameters

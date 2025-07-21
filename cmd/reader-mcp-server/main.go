@@ -28,6 +28,7 @@ func main() {
 	)
 	mcpServer.AddTool(toolSave(readerClient))
 	mcpServer.AddTool(toolList(readerClient))
+	mcpServer.AddTool(toolMove(readerClient))
 
 	log.Println("Starting Stdio server")
 	if err := server.ServeStdio(mcpServer); err != nil {
