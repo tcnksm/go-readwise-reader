@@ -18,6 +18,7 @@ type listCmd struct {
 	tag      string
 	since    string
 	html     bool
+	unread   bool
 }
 
 func (*listCmd) Name() string { return "list" }
@@ -36,6 +37,7 @@ Flags:
   -tag        Filter by tag name
   -since      Filter documents updated since duration ago (e.g., 10s, 30m, 24h)
   -html       Include HTML content in the response
+  -unread     Only return unread documents
 `
 }
 func (c *listCmd) SetFlags(f *flag.FlagSet) {
@@ -45,6 +47,7 @@ func (c *listCmd) SetFlags(f *flag.FlagSet) {
 	f.StringVar(&c.tag, "tag", "", "Filter by tag name")
 	f.StringVar(&c.since, "since", "", "Filter documents updated since duration ago (e.g., 10s, 30m, 24h)")
 	f.BoolVar(&c.html, "html", false, "Include HTML content in the response")
+	f.BoolVar(&c.unread, "unread", false, "Only return unread documents")
 }
 
 func (c *listCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
@@ -125,6 +128,18 @@ func (c *listCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface{}
 	if err != nil {
 		printError(fmt.Errorf("failed to list documents: %w", err))
 		return subcommands.ExitFailure
+	}
+
+	// Filter unread documents if requested
+	if c.unread {
+		results := make([]reader.Document, 0, len(response.Results))
+		for _, doc := range response.Results {
+			if doc.FirstOpenedAt != nil {
+				continue
+			}
+			results = append(results, doc)
+		}
+		response.Results = results
 	}
 
 	// Output documents as pretty JSON
