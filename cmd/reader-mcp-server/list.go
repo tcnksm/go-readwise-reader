@@ -34,6 +34,10 @@ func toolList(client reader.Client) (mcp.Tool, server.ToolHandlerFunc) {
 				"limit",
 				mcp.Description("Maximum number of documents to return (default: 5)"),
 			),
+			mcp.WithBoolean(
+				"unread",
+				mcp.Description("Only return unread documents"),
+			),
 		),
 		func(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 			// Extract parameters
@@ -84,13 +88,25 @@ func toolList(client reader.Client) (mcp.Tool, server.ToolHandlerFunc) {
 				return mcp.NewToolResultError(fmt.Sprintf("failed to list documents: %v", err)), nil
 			}
 
+			// Filter unread documents if requested
+			if req.GetBool("unread", false) {
+				results := make([]reader.Document, 0, len(resp.Results))
+				for _, doc := range resp.Results {
+					if doc.FirstOpenedAt != nil {
+						continue
+					}
+					results = append(results, doc)
+				}
+				resp.Results = results
+			}
+
 			// Limit results if needed
 			if len(resp.Results) > limit {
 				resp.Results = resp.Results[:limit]
 			}
 
 			// Return JSON response
-			jsonData, err := json.MarshalIndent(resp, "", "  ")
+			jsonData, err := json.MarshalIndent(resp.Results, "", "  ")
 			if err != nil {
 				return mcp.NewToolResultError(fmt.Sprintf("failed to format response: %v", err)), nil
 			}
