@@ -55,8 +55,8 @@ Implement remaining tools for the Readwise Reader MCP server following the exist
 
 ## Success Criteria
 
-- [ ] 'list' tool implemented and functional
-- [ ] 'move' tool implemented and functional
+- [x] 'list' tool implemented and functional
+- [x] 'move' tool implemented and functional
 - [ ] Both tools tested with MCP Inspector
-- [ ] Error handling for invalid parameters
-- [ ] Consistent JSON response format across all tools
+- [x] Error handling for invalid parameters
+- [x] Consistent JSON response format across all tools
