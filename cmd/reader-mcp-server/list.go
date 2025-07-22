@@ -13,7 +13,7 @@ import (
 
 func toolList(client reader.Client) (mcp.Tool, server.ToolHandlerFunc) {
 	return mcp.NewTool(
-			"list",
+			"readwise_reader_list",
 			mcp.WithDescription("List documents from Readwise Reader"),
 			mcp.WithToolAnnotation(
 				mcp.ToolAnnotation{
@@ -32,7 +32,7 @@ func toolList(client reader.Client) (mcp.Tool, server.ToolHandlerFunc) {
 			),
 			mcp.WithNumber(
 				"limit",
-				mcp.Description("Maximum number of documents to return (default: 5)"),
+				mcp.Description("Maximum number of documents to return (default: 50)"),
 			),
 			mcp.WithBoolean(
 				"unread",
@@ -76,7 +76,7 @@ func toolList(client reader.Client) (mcp.Tool, server.ToolHandlerFunc) {
 			opts.UpdatedAfter = &updatedAfter
 
 			// Handle limit parameter
-			limit := int(req.GetFloat("limit", 5))
+			limit := int(req.GetFloat("limit", 50))
 
 			if limit <= 0 {
 				return mcp.NewToolResultError("limit must be greater than 0"), nil

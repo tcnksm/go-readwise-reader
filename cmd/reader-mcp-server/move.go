@@ -12,7 +12,7 @@ import (
 
 func toolMove(client reader.Client) (mcp.Tool, server.ToolHandlerFunc) {
 	return mcp.NewTool(
-			"move",
+			"readwise_reader_move",
 			mcp.WithDescription("Move a document to a different location in Readwise Reader"),
 			mcp.WithToolAnnotation(
 				mcp.ToolAnnotation{

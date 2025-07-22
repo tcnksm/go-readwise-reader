@@ -12,7 +12,7 @@ import (
 
 func toolSave(client reader.Client) (mcp.Tool, server.ToolHandlerFunc) {
 	return mcp.NewTool(
-			"save",
+			"readwise_reader_save",
 			mcp.WithDescription("Save a given URL link to Readwise Reader"),
 			mcp.WithToolAnnotation(
 				mcp.ToolAnnotation{
