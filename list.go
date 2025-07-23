@@ -88,6 +88,9 @@ type Document struct {
 	// Author is the document author
 	Author string `json:"author"`
 
+	// Notes is a top-level note of the document
+	Notes string `json:"notes"`
+
 	// Category is the document type
 	Category Category `json:"category"`
 
