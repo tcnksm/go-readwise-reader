@@ -26,6 +26,13 @@ type UpdateDocumentRequest struct {
 	// ImageURL is the document image URL
 	ImageURL string `json:"image_url,omitempty"`
 
+	// Seen marks the document as opened. When true, populates first_opened_at/last_opened_at.
+	// When false, clears these timestamps.
+	Seen *bool `json:"seen,omitempty"`
+
+	// Tags is a list of tags to associate with the document
+	Tags []string `json:"tags,omitempty"`
+
 	// Location is where the document should be stored
 	Location Location `json:"location,omitempty"`
 

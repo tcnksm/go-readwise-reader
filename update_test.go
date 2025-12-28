@@ -73,6 +73,23 @@ func TestUpdateDocument(t *testing.T) {
 			wantURL: "https://read.readwise.io/read/doc789",
 		},
 		{
+			name:       "successful update with tags and seen",
+			documentID: "doc999",
+			req: &UpdateDocumentRequest{
+				Title: "Article with Tags",
+				Tags:  []string{"golang", "api", "readwise"},
+				Seen:  boolPtr(true),
+			},
+			responseStatus: http.StatusOK,
+			responseBody: UpdateDocumentResponse{
+				ID:  "doc999",
+				URL: "https://read.readwise.io/read/doc999",
+			},
+			wantErr: false,
+			wantID:  "doc999",
+			wantURL: "https://read.readwise.io/read/doc999",
+		},
+		{
 			name:       "empty document ID",
 			documentID: "",
 			req: &UpdateDocumentRequest{
@@ -215,4 +232,9 @@ func TestUpdateDocument_ContextCancellation(t *testing.T) {
 	if err == nil {
 		t.Error("expected error due to cancelled context, got nil")
 	}
+}
+
+// boolPtr returns a pointer to the given bool value
+func boolPtr(b bool) *bool {
+	return &b
 }
